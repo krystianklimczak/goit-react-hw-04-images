@@ -118,7 +118,9 @@ export default class App extends Component {
     if (newState.currentPage !== prevState.currentPage) {
       this.getInitialData();
     }
-    window.scrollTo(0, document.body.scrollHeight);
+    if (this.state.currentPage !== 1) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   }
 
   render() {
