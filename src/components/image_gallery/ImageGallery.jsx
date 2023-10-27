@@ -1,6 +1,14 @@
+// 'React.Component'
 import React, { Component } from 'react';
+
+// components
 import ImageGalleryItem from 'components/image_gallery_item/ImageGalleryItem';
+
+// css modules
 import css from './ImageGallery.module.css';
+
+// proptypes
+import PropTypes from 'prop-types';
 
 export default class ImageGallery extends Component {
   render() {
@@ -19,3 +27,13 @@ export default class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+    })
+  ),
+};
