@@ -121,7 +121,8 @@ export default class App extends Component {
     if (
       this.state.currentPage !== 1 &&
       !newState.isModalVisible &&
-      !prevState.isModalVisible
+      !prevState.isModalVisible &&
+      prevState.prevQuery === newState.query
     ) {
       window.scrollTo(0, document.body.scrollHeight);
     }
