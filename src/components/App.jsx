@@ -118,12 +118,7 @@ export default class App extends Component {
     if (newState.currentPage !== prevState.currentPage) {
       this.getInitialData();
     }
-    if (
-      this.state.currentPage !== 1 &&
-      !newState.isModalVisible &&
-      !prevState.isModalVisible &&
-      prevState.prevQuery === newState.query
-    ) {
+    if (prevState.isLoading && newState.currentPage !== 1) {
       window.scrollTo(0, document.body.scrollHeight);
     }
   }
