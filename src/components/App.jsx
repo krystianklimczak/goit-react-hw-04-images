@@ -96,6 +96,11 @@ export default class App extends Component {
         `https://pixabay.com/api/?${searchParams}`
       );
       const responseImages = await response.data.hits;
+      if (responseImages.length === 0) {
+        Notiflix.Notify.failure(
+          `There isn't any images with that query: "${query}"`
+        );
+      }
       this.setState(state => ({
         images: [...state.images, ...responseImages],
         onLastPage: responseImages.length < 12 ? true : false,
@@ -107,9 +112,8 @@ export default class App extends Component {
     }
   };
 
-  async componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const newState = this.state;
-
     if (
       newState.currentPage !== prevState.currentPage &&
       newState.images.length !== 0
