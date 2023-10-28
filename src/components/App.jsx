@@ -19,22 +19,18 @@ export default class App extends Component {
   state = {
     isLoading: false,
     isModalVisible: false,
-    currentPage: 1,
-    error: '',
-    images: [],
-    prevQuery: '',
     onLastPage: false,
+    currentPage: 1,
+    images: [],
+    error: '',
+    prevQuery: '',
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
 
     const form = event.currentTarget;
     const query = form.elements.query.value;
-
-    this.setState({
-      query: query,
-    });
 
     switch (query) {
       case '':
@@ -46,17 +42,16 @@ export default class App extends Component {
         );
         break;
       default:
-        this.getInitialData();
-        this.setState({
-          prevQuery: query,
-          currentPage: 1,
-          images: [],
-        });
+        this.setState(
+          {
+            prevQuery: query,
+            currentPage: 1,
+            images: [],
+            query: query,
+          },
+          () => this.getInitialData()
+        );
     }
-  };
-
-  handleChange = event => {
-    this.setState({ query: event.target.value });
   };
 
   handleClick = () => {
@@ -115,7 +110,10 @@ export default class App extends Component {
   async componentDidUpdate(prevProps, prevState) {
     const newState = this.state;
 
-    if (newState.currentPage !== prevState.currentPage) {
+    if (
+      newState.currentPage !== prevState.currentPage &&
+      newState.images.length !== 0
+    ) {
       this.getInitialData();
     }
     if (prevState.isLoading && newState.currentPage !== 1) {
@@ -129,7 +127,7 @@ export default class App extends Component {
 
     return (
       <div className={css.app}>
-        <Searchbar onSubmit={this.handleSubmit} onChange={this.handleChange} />
+        <Searchbar onSubmit={this.handleSubmit} />
         {images.length > 0 && (
           <ImageGallery
             images={images}

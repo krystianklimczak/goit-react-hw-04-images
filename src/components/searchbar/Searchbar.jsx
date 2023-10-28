@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 
 export default class Searchbar extends Component {
   render() {
-    const { onSubmit, onChange } = this.props;
+    const { onSubmit } = this.props;
     return (
       <header className={css.searchbar}>
         <form className={css.searchForm} onSubmit={onSubmit}>
@@ -30,7 +30,6 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={onChange}
             name="query"
           />
         </form>
@@ -41,5 +40,4 @@ export default class Searchbar extends Component {
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
