@@ -1,33 +1,25 @@
-// 'React.Component'
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 
-// css modules
+import { useImages } from 'hooks/ImagesContext';
+
 import css from './Modal.module.css';
 
-// proptypes
-import PropTypes from 'prop-types';
+export default function Modal() {
+  const { modalImageURL, handleEscapeKey } = useImages();
 
-export default class Modal extends Component {
-  componentDidMount() {
-    document.addEventListener('keydown', this.props.handleEscapeKey);
-  }
+  useEffect(() => {
+    document.addEventListener('keydown', handleEscapeKey);
 
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.props.handleEscapeKey);
-  }
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  });
 
-  render() {
-    const { modalImageURL } = this.props;
-    return (
-      <div className={css.overlay}>
-        <div className={css.modal}>
-          <img src={modalImageURL} alt="Take a look" />
-        </div>
+  return (
+    <div className={css.overlay}>
+      <div className={css.modal}>
+        <img src={modalImageURL} alt="Take a look" />
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-Modal.propTypes = {
-  modalImageURL: PropTypes.string.isRequired,
-};
