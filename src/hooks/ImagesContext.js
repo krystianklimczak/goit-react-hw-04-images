@@ -53,31 +53,14 @@ export const ImagesProvider = ({ children }) => {
         Notiflix.Notify.info(`You already search for the ${prevQuery}`);
         break;
       default:
-        // this.setState(
-        //   {
-        //     prevQuery: query,
-        //     currentPage: 1,
-        //     images: [],
-        //     query: query,
-        //   },
-        //   () => this.getInitialData()
-        // );
         setPrevQuery(query);
         setCurrentPage(1);
         setImages([]);
         setQuery(query);
-      // ????
-      // () => {
-      //   const [query, setQuery] = useState(query);
-      //   getInitialData();
-      // };
     }
   };
 
   const handleClick = () => {
-    // this.setState(prevState => ({
-    //   currentPage: prevState.currentPage + 1,
-    // }));
     setCurrentPage(currentPage + 1);
   };
 
@@ -86,27 +69,17 @@ export const ImagesProvider = ({ children }) => {
       return;
     }
 
-    // this.setState({
-    //   isModalVisible: true,
-    //   modalImageURL: event.target.dataset.source,
-    // });
-
-    // ?????
     setIsModalVisible(true);
     setModalImageURL(event.target.dataset.source);
   };
 
   const handleEscapeKey = event => {
     if (event.key === 'Escape') {
-      // this.setState({
-      //   isModalVisible: false,
-      // });
       setIsModalVisible(false);
     }
   };
 
   async function getInitialData() {
-    // const { query, currentPage } = this.state;
     const searchParams = new URLSearchParams({
       q: query,
       page: currentPage,
@@ -117,29 +90,27 @@ export const ImagesProvider = ({ children }) => {
     });
 
     try {
-      // this.setState({ isLoading: true });
       setIsLoading(true);
+
       const response = await axios.get(
         `https://pixabay.com/api/?${searchParams}`
       );
       const responseImages = await response.data.hits;
+
       if (responseImages.length === 0) {
         Notiflix.Notify.failure(
           `There isn't any images with that query: "${query}"`
         );
       }
-      // this.setState(state => ({
-      //   images: [...state.images, ...responseImages],
-      //   onLastPage: responseImages.length < 12 ? true : false,
-      // }));
+
       setImages([...images, ...responseImages]);
+
       const isOnLastPage = responseImages.length < 12 ? true : false;
+
       setOnLastPage(isOnLastPage);
     } catch (error) {
-      // this.setState({ error: error.toString() });
       setError(error.toString());
     } finally {
-      // this.setState({ isLoading: false });
       setIsLoading(false);
     }
   }
