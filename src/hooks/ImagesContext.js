@@ -3,7 +3,6 @@ import Notiflix from 'notiflix';
 import PropTypes from 'prop-types';
 
 const { createContext, useContext, useState, useEffect } = require('react');
-const API_KEY = process.env.REACT_APP_API_KEY;
 
 const ImagesContext = createContext();
 
@@ -84,7 +83,7 @@ export const ImagesProvider = ({ children }) => {
     const searchParams = new URLSearchParams({
       q: query,
       page: currentPage,
-      key: API_KEY,
+      key: '40298535-c3e5c72155b16daae721a7471',
       image_type: 'photo',
       orientation: 'horizontal',
       per_page: 12,
